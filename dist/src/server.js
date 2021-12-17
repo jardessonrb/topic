@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 require("./database/connection");
+require("./database/connection");
 require("dotenv/config");
 var express_1 = __importDefault(require("express"));
 var cors_1 = __importDefault(require("cors"));

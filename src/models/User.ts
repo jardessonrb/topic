@@ -4,8 +4,7 @@ import {
   Entity,
   Generated,
   OneToMany,
-  PrimaryGeneratedColumn,
-  Unique
+  PrimaryGeneratedColumn
 } from "typeorm";
 import { Topic } from "./Topic";
 import { VoteRecord } from "./VoteRecord";

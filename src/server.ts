@@ -1,8 +1,9 @@
-import './src/database/connection';
+import './database/connection';
+import "./database/connection";
 import 'dotenv/config';
 import express from "express";
 import cors from 'cors';
-import { routers } from "./src/routers";
+import { routers } from "./routers";
 
 const application       = express();
 const portRunningServer = process.env.PORT || 3333;
