@@ -1,4 +1,4 @@
-
+console.log(process.env.DATABASE_URL)
 module.exports = {
   "type": process.env.TYPE_CONNECTION,
   "url": process.env.DATABASE_URL,
