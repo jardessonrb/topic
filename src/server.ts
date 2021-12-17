@@ -5,7 +5,7 @@ import cors from 'cors';
 import { routers } from "./routers";
 
 const application       = express();
-const portRunningServer = process.env.SERVER_PORT || 3333;
+const portRunningServer = process.env.PORT || 3333;
 
 application.use(cors());
 application.use(express.json());

@@ -1,6 +1,6 @@
-interface ResponseSuccess{
+type ResponseSuccess = {
   message: string;
-  type: string;
+  type: "success";
   body: any;
 }
 

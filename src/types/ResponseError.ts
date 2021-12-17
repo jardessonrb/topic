@@ -1,6 +1,6 @@
-interface ResponseError{
+type ResponseError = {
   message: string;
-  type: string;
+  type: "error";
   errors?: any[];
 }
 
