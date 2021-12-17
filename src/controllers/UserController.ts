@@ -24,6 +24,24 @@ class UserController {
       const res: ResponseError = {message: "Erro no servidor", type: "error"}
       return response.status(500).json(res);
     }
+  }
+
+  static async logIn(request: Request, response: Response): Promise<Response> {
+    const { emailUser, passwordUser } = request.body;
+    const userRepository = getConnection().getCustomRepository(UserRepository);
+
+    try {
+      const user = await userRepository.findOne({where: {email: emailUser, password: passwordUser}});
+      if(user){
+        const res: ResponseSuccess = {message: "Usuario logado", type: "success", body: user};
+        return response.status(200).json(res);
+      }
+      const res: ResponseSuccess = {message: "Usuario não permitido", type: "success", body: user};
+      return response.status(403).json(res);
+    } catch (error) {
+      const res: ResponseError = {message: "Erro no servidor", type: "error"}
+      return response.status(500).json(res);
+    }
 
 
   }
