@@ -27,7 +27,6 @@ class TopicController{
         return response.status(403).json(res);
     }
 
-    const topicRepository = getConnection().getCustomRepository(TopicRepository);
     try {
       user = await getConnection().getCustomRepository(UserRepository).findById(userId);
       if(!user){
@@ -39,6 +38,7 @@ class TopicController{
       const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server"};
       return response.status(500).json(res);
     }
+    const topicRepository = getConnection().getCustomRepository(TopicRepository);
 
     const topicCreated = topicRepository.create({
       title,
