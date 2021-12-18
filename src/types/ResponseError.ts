@@ -1,7 +1,7 @@
 type ResponseError = {
   message: string;
-  type: "error";
+  type: string;
   errors?: any[];
 }
 
-export {  ResponseError };
+export { ResponseError };

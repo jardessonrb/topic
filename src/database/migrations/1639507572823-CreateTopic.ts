@@ -25,11 +25,11 @@ export class CreateTopic1639507572823 implements MigrationInterface {
               width: 400,
             },
             {
-              name: 'positiveVotes',
+              name: 'up_votes',
               type: 'integer'
             },
             {
-              name: 'negativeVotes',
+              name: 'down_votes',
               type: 'integer'
             },
             {

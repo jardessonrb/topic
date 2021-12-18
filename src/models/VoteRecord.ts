@@ -17,6 +17,9 @@ class VoteRecord{
   @Generated('uuid')
   id: string;
 
+  @Column({name: "type_vote", type: "boolean"})
+  typeVote: boolean;
+
   @Column({type: 'timestamp'})
   @CreateDateColumn({name: 'created_at'})
   createdAt: Date;

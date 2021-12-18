@@ -16,6 +16,10 @@ export class CreateVoteRecord1639508502862 implements MigrationInterface {
               default: 'uuid_generate_v4()'
             },
             {
+              name: 'type_vote',
+              type: 'boolean'
+            },
+            {
               name: 'id_user',
               type: 'uuid'
             },

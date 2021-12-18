@@ -25,13 +25,15 @@ class Topic{
   body: string;
 
   @Column({name: 'up_votes', type: 'int'})
-  positiveVotes: number;
+  upVotes: number;
 
   @Column({name: 'down_votes', type: 'int'})
-  negativeVotes: number;
+  downVotes: number;
 
   @Column({name: 'is_closed', type: 'boolean', default: 'false'})
   isClosed: boolean;
+
+  situation: string;
 
   @Column({type: 'timestamp'})
   @CreateDateColumn({name: 'created_at'})
@@ -45,6 +47,16 @@ class Topic{
 
   @OneToMany(() => VoteRecord, voteRecords => voteRecords.topic)
   voteRecords: VoteRecord[];
+
+  setSituation(): void{
+    if(this.upVotes > this.downVotes){
+      this.situation = "positiva"
+    }else if(this.upVotes == this.downVotes){
+      this.situation = "empate"
+    }else{
+      this.situation = "negativa"
+    }
+  }
 
 }
 
