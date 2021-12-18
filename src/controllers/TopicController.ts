@@ -57,6 +57,24 @@ class TopicController{
       return response.status(500).json(res);
     }
   }
+
+  static async listTopics(request: Request, response: Response ): Promise<Response>{
+    const { page = 1, limit = 10, full = false} = request.query;
+    //Uma forma de pegar o valor correto, visto que Boolean(variavel) sempre retorna true para variaveis não vazias.
+    const isFullListing: boolean = full.toString() === "true";
+    const topicRepository = getConnection().getCustomRepository(TopicRepository);
+
+    try {
+      const topics = await topicRepository.listTopics(Number(page), Number(limit), isFullListing);
+      const res: ResponseSuccess = {message: full ? "Lista de todos os topicos" : "Topicos em aberto", type: "success", body: topics};
+      return response.status(200).json(res);
+
+    } catch (error) {
+      const res: ResponseErrorServer = {message:"Erro no servidor", type: "error server"}
+      return response.status(500).json(res);
+    }
+
+  }
 }
 
 

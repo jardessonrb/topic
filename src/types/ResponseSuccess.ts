@@ -1,7 +1,7 @@
 type ResponseSuccess = {
   message: string;
   type: "success";
-  body: any;
+  body: any | any[];
 }
 
 export { ResponseSuccess };

@@ -7,6 +7,8 @@ routers.post("/user", UserController.createUser);
 routers.get("/user/login", UserController.logIn);
 
 routers.post("/topic", TopicController.createTopic);
+routers.get("/topic", TopicController.listTopics);
+
 
 
 export { routers };
