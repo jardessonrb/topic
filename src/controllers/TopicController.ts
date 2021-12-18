@@ -94,7 +94,7 @@ class TopicController{
       });
     } catch (error) {
       const res: ResponseError = {message: "Erro de validação", type: "error validation", errors: error.errors}
-        return response.status(403).json(res);
+      return response.status(403).json(res);
     }
 
     const topicRepository = getConnection().getCustomRepository(TopicRepository);
@@ -129,12 +129,37 @@ class TopicController{
 
     } catch (error) {
       await queryRunnerTransaction.rollbackTransaction();
-      const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server"};
 
+      const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server"};
       return response.status(500).json(res);
 
     }finally{
       await queryRunnerTransaction.release();
+    }
+  }
+
+  static async findTopic(request: Request, response: Response ): Promise<Response>{
+    const { topicId } = request.params;
+    const schemaValidation = Yup.string().uuid();
+
+    if(!await schemaValidation.isValid(topicId)){
+      const res: ResponseError = {message: "Erro de validação, topico não valido", type: "error validation"}
+      return response.status(200).json(res);
+    }
+
+    try {
+      const topic = await getConnection().getCustomRepository(TopicRepository).findOne(topicId);
+      if(!topic){
+        const res: ResponseSuccess = {message: "Nenhum topico encontrado", type: "success", body: {}};
+        return response.status(200).json(res);
+      }
+
+      const res: ResponseSuccess = {message: "Topico encontrado", type: "success", body: topic};
+      return response.status(200).json(res);
+
+    } catch (error) {
+      const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server"};
+      return response.status(500).json(res);
     }
   }
 }
