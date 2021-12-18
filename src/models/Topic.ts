@@ -48,16 +48,6 @@ class Topic{
   @OneToMany(() => VoteRecord, voteRecords => voteRecords.topic)
   voteRecords: VoteRecord[];
 
-  setSituation(): void{
-    if(this.upVotes > this.downVotes){
-      this.situation = "positiva"
-    }else if(this.upVotes == this.downVotes){
-      this.situation = "empate"
-    }else{
-      this.situation = "negativa"
-    }
-  }
-
 }
 
 export { Topic };

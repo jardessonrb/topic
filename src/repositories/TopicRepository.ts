@@ -29,5 +29,24 @@ class TopicRepository  extends Repository<Topic> {
       throw new Error();
     }
   }
+
+  async insertVote(typeVote: boolean, topicId: string): Promise<void>{
+    try {
+      if(typeVote){
+        await this.manager.createQueryBuilder().update(Topic).set({
+          upVotes: () => "up_votes + 1"
+        }).where("id_topic = :topicId", {topicId: topicId})
+        .execute()
+      }else{
+        await this.manager.createQueryBuilder().update(Topic).set({
+          downVotes: () => "down_votes + 1"
+        }).where("id_topic = :topicId", {topicId: topicId})
+        .execute()
+      }
+
+    } catch (error) {
+      throw new Error();
+    }
+  }
 }
 export { TopicRepository  };
