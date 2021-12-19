@@ -6,6 +6,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn
 } from "typeorm";
+import { Comment } from "./Comment";
 import { Topic } from "./Topic";
 import { VoteRecord } from "./VoteRecord";
 
@@ -31,6 +32,9 @@ class User{
 
   @OneToMany(() => Topic, topic => topic.user)
   topics: Topic[];
+
+  @OneToMany(() => Comment, comment => comment.user)
+  comments: Comment[];
 
   @OneToMany(() => VoteRecord, voteRecords => voteRecords.user)
   voteRecords: VoteRecord[];

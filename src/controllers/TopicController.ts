@@ -7,6 +7,7 @@ import { ResponseError, ResponseErrorServer, ResponseSuccess } from "../types";
 import * as Yup from "yup";
 import { Topic } from "../models/Topic";
 import { VoteRecordRepository } from "../repositories/VoteRecordRepository";
+import { CommentRepository } from "../repositories/CommentRepository";
 
 class TopicController{
 
@@ -153,6 +154,8 @@ class TopicController{
         const res: ResponseSuccess = {message: "Nenhum topico encontrado", type: "success", body: {}};
         return response.status(200).json(res);
       }
+
+      topic.comments = await getConnection().getCustomRepository(CommentRepository).findCommentByTopic(topic);
 
       const res: ResponseSuccess = {message: "Topico encontrado", type: "success", body: topic};
       return response.status(200).json(res);

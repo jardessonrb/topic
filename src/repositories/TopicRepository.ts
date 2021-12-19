@@ -1,5 +1,6 @@
-import { EntityRepository, Repository } from "typeorm";
+import { EntityRepository, getConnection, Repository } from "typeorm";
 import { Topic } from "../models/Topic";
+import { CommentRepository } from "./CommentRepository";
 
 @EntityRepository(Topic)
 class TopicRepository  extends Repository<Topic> {
@@ -21,6 +22,10 @@ class TopicRepository  extends Repository<Topic> {
                             order: {createdAt: 'DESC'},
                             skip: offSet,
                             take: limit});
+      }
+      const commentRepository = getConnection().getCustomRepository(CommentRepository);
+      for (let i = 0; i < topics.length; i++) {
+        topics[i].comments = await commentRepository.findCommentByTopic(topics[i]);
       }
 
       return topics;

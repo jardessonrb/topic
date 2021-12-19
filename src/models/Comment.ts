@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn
 } from "typeorm";
 import { Topic } from "./Topic";
+import { User } from "./User";
 
 @Entity('comments')
 class Comment{
@@ -24,6 +25,9 @@ class Comment{
 
   @ManyToOne(() => Topic, topic => topic.comments)
   topic: Topic;
+
+  @ManyToOne(() => User, user => user.comments)
+  user: User;
 
 }
 
