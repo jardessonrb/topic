@@ -25,6 +25,7 @@ class UserController {
     }
 
     const userRepository = getConnection().getCustomRepository(UserRepository);
+
     const userCreated = userRepository.create({
       name,
       email,
@@ -32,9 +33,15 @@ class UserController {
     });
 
     try {
-      const user = await userRepository.save(userCreated);
-      const res: ResponseSuccess = {message: "Usuario cadastrado", type: "success", body: user};
-      return response.status(200).json(res);
+
+      if(!await userRepository.userValidation(email)){
+        const user = await userRepository.save(userCreated);
+        const res: ResponseSuccess = {message: "Usuario cadastrado", type: "success", body: user};
+        return response.status(200).json(res);
+      }
+
+      const res: ResponseError = {message: "Usuario já cadastrado", type: "error validation"};
+      return response.status(403).json(res);
 
     } catch (error) {
       const res: ResponseError = {message: "Erro no servidor", type: "error"}

@@ -12,6 +12,16 @@ class UserRepository extends Repository<User> {
       throw new Error();
     }
   }
+
+  async userValidation(email: string): Promise<boolean>{
+    try {
+      const user = await this.findOne({where: {email: email}});
+      return user ? true : false;
+
+    } catch (error) {
+      throw new Error();
+    }
+  }
 }
 
 export { UserRepository };

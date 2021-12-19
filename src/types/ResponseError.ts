@@ -1,6 +1,6 @@
 type ResponseError = {
   message: string;
-  type: string;
+  type: "error" | "error validation";
   errors?: any[];
 }
 
