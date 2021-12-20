@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { Topic } from "../models/Topic";
 import { User } from "../models/User";
 import * as Yup from 'yup';
-import { ResponseError, ResponseErrorServer, ResponseSuccess } from "../types";
+import { ResponseError, ResponseErrorServer, ResponseSuccess } from "../types/responses";
 import { getConnection } from "typeorm";
 import { TopicRepository } from "../repositories/TopicRepository";
 import { UserRepository } from "../repositories/UserRepository";

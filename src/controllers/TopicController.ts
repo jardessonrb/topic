@@ -3,7 +3,7 @@ import { getConnection } from "typeorm";
 import { User } from "../models/User";
 import { TopicRepository } from "../repositories/TopicRepository";
 import { UserRepository } from "../repositories/UserRepository";
-import { ResponseError, ResponseErrorServer, ResponseSuccess } from "../types";
+import { ResponseError, ResponseErrorServer, ResponseSuccess } from "../types/responses";
 import * as Yup from "yup";
 import { Topic } from "../models/Topic";
 import { VoteRecordRepository } from "../repositories/VoteRecordRepository";

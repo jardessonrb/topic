@@ -1,8 +1,9 @@
 import { getConnection } from 'typeorm';
 import { Request, Response } from 'express';
 import { UserRepository } from '../repositories/UserRepository';
-import { ResponseSuccess, ResponseError, ResponseErrorServer } from '../types';
+import { ResponseSuccess, ResponseError, ResponseErrorServer } from '../types/responses';
 import * as Yup from 'yup';
+import { UserView } from '../views/UserView';
 
 class UserController {
 
@@ -51,7 +52,6 @@ class UserController {
 
   static async logIn(request: Request, response: Response): Promise<Response> {
     const { email, password} = request.body;
-    const userRepository = getConnection().getCustomRepository(UserRepository);
 
     const schemaValidation = Yup.object().shape({
       email: Yup.string().required("O email é obrigatorio").email("email invalido"),
@@ -64,15 +64,18 @@ class UserController {
       });
     } catch (error) {
       const res: ResponseError = {message: "Erro de validação", type: "error validation", errors: error.errors}
-        return response.status(403).json(res);
+      return response.status(403).json(res);
     }
 
+    const userRepository = getConnection().getCustomRepository(UserRepository);
     try {
       const user = await userRepository.findOne({where: {email: email, password: password}});
       if(user){
-        const res: ResponseSuccess = {message: "Usuario logado", type: "success", body: user};
+        const userResponse = UserView.viewUser(user);
+        const res: ResponseSuccess = {message: "Usuario logado", type: "success", body: userResponse};
         return response.status(200).json(res);
       }
+
       const res: ResponseSuccess = {message: "Usuario não permitido", type: "success", body: user};
       return response.status(403).json(res);
 
@@ -80,7 +83,6 @@ class UserController {
       const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server"}
       return response.status(500).json(res);
     }
-
 
   }
 }

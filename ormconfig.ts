@@ -1,4 +1,6 @@
-module.exports = {
+import "dotenv/config";
+
+export default {
   "type": process.env.TYPE_CONNECTION,
   "url": process.env.DATABASE_URL,
   "logging": process.env.TYPEORM_LOGGING,
