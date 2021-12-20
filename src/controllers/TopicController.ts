@@ -7,8 +7,8 @@ import { ResponseError, ResponseErrorServer, ResponseSuccess } from "../types/re
 import * as Yup from "yup";
 import { Topic } from "../models/Topic";
 import { VoteRecordRepository } from "../repositories/VoteRecordRepository";
-import { CommentRepository } from "../repositories/CommentRepository";
 import { TopicView } from "../views/TopicView";
+import { VoteRecordView } from "../views/VoteRecordView";
 
 class TopicController{
 
@@ -54,7 +54,9 @@ class TopicController{
 
     try {
       const topic = await topicRepository.save(topicCreated);
-      const res: ResponseSuccess = {message: "Topico criado com sucesso", type: "success", body: topic};
+      const topicResponse = TopicView.viewTopic(topic);
+
+      const res: ResponseSuccess = {message: "Topico criado com sucesso", type: "success", body: topicResponse};
       return response.status(200).json(res);
     } catch (error) {
       const res: ResponseErrorServer = {message:"Erro no servidor", type: "error server"}
@@ -130,10 +132,11 @@ class TopicController{
     try {
       topicRepository.insertVote(typeVote, topicId);
       const voteRecord = await getConnection().getCustomRepository(VoteRecordRepository).registerRecord(typeVote, user, topic);
+      const voteRecordResponse = VoteRecordView.viewVoteRecord(voteRecord);
 
       await queryRunnerTransaction.commitTransaction();
 
-      const res: ResponseSuccess = {message: "Voto registrado com sucesso", type: "success", body: voteRecord};
+      const res: ResponseSuccess = {message: "Voto registrado com sucesso", type: "success", body: voteRecordResponse};
       return response.status(200).json(res);
 
     } catch (error) {
@@ -157,15 +160,14 @@ class TopicController{
     }
 
     try {
-      const topic = await getConnection().getCustomRepository(TopicRepository).findOne(topicId);
+      const topic = await getConnection().getCustomRepository(TopicRepository).findOneTopic(topicId);
       if(!topic){
         const res: ResponseSuccess = {message: "Nenhum topico encontrado", type: "success", body: {}};
         return response.status(200).json(res);
       }
 
-      topic.comments = await getConnection().getCustomRepository(CommentRepository).findCommentByTopic(topic);
-
-      const res: ResponseSuccess = {message: "Topico encontrado", type: "success", body: topic};
+      const topicResponse = TopicView.viewTopic(topic);
+      const res: ResponseSuccess = {message: "Topico encontrado", type: "success", body: topicResponse};
       return response.status(200).json(res);
 
     } catch (error) {
@@ -208,11 +210,6 @@ class TopicController{
       return response.status(500).json(res);
     }
 
-
-
-
-
-    return response;
   }
 
   static async listTopicsByUser(request: Request, response: Response ): Promise<Response>{
@@ -234,7 +231,8 @@ class TopicController{
       }
 
       const topics = await topicRepository.listTopicsByUser(user, Number(page), Number(limit));
-      const res: ResponseSuccess = {message: "Topicos buscados", type: "success", body: topics};
+      const topicsResponse = TopicView.viewTopics(topics);
+      const res: ResponseSuccess = {message: "Topicos buscados", type: "success", body: topicsResponse};
       return response.status(200).json(res);
 
     } catch (error) {

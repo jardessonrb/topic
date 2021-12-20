@@ -1,4 +1,5 @@
 import { Topic } from "../models/Topic";
+import { UserView } from "./UserView";
 
 
 class TopicView {
@@ -11,10 +12,12 @@ class TopicView {
     return topicsView;
   }
 
-  static viewTopic(topic: Topic): Topic{
+  static viewTopic(topic: Topic){
     return {
       situation: this.defineSituation(topic.upVotes, topic.downVotes),
-      ...topic
+      ...topic,
+      user: null,
+      comments: []
     }
   }
 

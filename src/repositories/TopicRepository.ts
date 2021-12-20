@@ -26,16 +26,22 @@ class TopicRepository  extends Repository<Topic> {
                             skip: offSet,
                             take: limit});
       }
-      const commentRepository = getConnection().getCustomRepository(CommentRepository);
-      for (let i = 0; i < topics.length; i++) {
-        topics[i].comments = await commentRepository.findCommentByTopic(topics[i]);
-      }
+      topics = await this.insertCommentsInTopic(topics);
 
       return topics;
 
     } catch (error) {
       throw new Error();
     }
+  }
+
+  async insertCommentsInTopic(topics: Topic[]): Promise<Topic[]>{
+    const commentRepository = getConnection().getCustomRepository(CommentRepository);
+    for (let i = 0; i < topics.length; i++) {
+      topics[i].comments = await commentRepository.findCommentByTopic(topics[i].id.toString());
+    }
+    return topics;
+
   }
 
   async insertVote(typeVote: boolean, topicId: string): Promise<void>{
@@ -99,33 +105,32 @@ class TopicRepository  extends Repository<Topic> {
     }
   }
 
-  async listTopicsByUser(user: User, page: number, limit: number): Promise<any[]>{
+  async listTopicsByUser(user: User, page: number, limit: number): Promise<Topic[]>{
     try {
       const offSet = (page - 1) * limit;
       limit = limit * page;
 
-      const result: any[] =  await this.createQueryBuilder("topics")
-                            .innerJoinAndSelect("topics.user", "user")
-                            .where("topics.userId = :id", {id: user.id})
-                            .offset(offSet)
-                            .limit(limit)
-                            .execute();
+      let topics: Topic[] = await this.find({
+        where: {user},
+        order: {createdAt: 'DESC'},
+        skip: offSet,
+        take: limit
+      });
 
-      const commentRepository = getConnection().getCustomRepository(CommentRepository);
-      const topics = result.map(function(topic){
-        return {
-          id: topic.topics_id_topic,
-          title: topic.topics_title_topic,
-          body: topic.topics_body_topic,
-          upVotes: topic.topics_up_votes,
-          downVotes: topic.topics_down_votes,
-          isClosed: topic.topics_is_closed,
-          createdAt: topic.topics_created_at,
-          nameUser: topic.user_name_user
-        }
-      })
-
+      topics = await this.insertCommentsInTopic(topics);
       return topics;
+
+    } catch (error) {
+      throw new Error();
+    }
+  }
+
+  async findOneTopic(topicId: string): Promise<Topic>{
+    try {
+      const topic = await this.findOne(topicId);
+      topic.comments = await getConnection().getCustomRepository(CommentRepository).findCommentByTopic(topic.id);
+      return topic;
+
     } catch (error) {
       throw new Error();
     }
