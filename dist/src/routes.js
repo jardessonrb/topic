@@ -7,6 +7,9 @@ var TopicController_1 = require("./controllers/TopicController");
 var UserController_1 = require("./controllers/UserController");
 var routes = (0, express_1.Router)();
 exports.routes = routes;
+routes.get("/", function (request, response) {
+    return response.send("<h1 align=\"center\">Bem-Vindo(a) a API TOPIC</h1>");
+});
 routes.post("/user", UserController_1.UserController.createUser);
 routes.get("/user/login", UserController_1.UserController.logIn);
 routes.post("/topic", TopicController_1.TopicController.createTopic);
