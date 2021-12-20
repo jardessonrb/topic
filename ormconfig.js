@@ -6,10 +6,10 @@ module.exports = {
   "synchronize": true,
   "uuidExtension": process.env.UUID_EXTENSION,
   "entities": [process.env.TYPEORM_ENTITIES],
-  "ssl": process.env.TYPEORM_SSL,
+  "ssl": true,
   "extra": {
     "ssl": {
-      "rejectUnauthorized": process.env.TYPEORM_REJECT_UNAUTHORIZED
+      "rejectUnauthorized": false
     }
   },
   "migrations": [process.env.TYPEORM_MIGRATIONS],
