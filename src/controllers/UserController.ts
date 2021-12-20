@@ -34,7 +34,7 @@ class UserController {
 
     try {
 
-      if(!await userRepository.userValidation(email)){
+      if(!await userRepository.existUser(email)){
         const user = await userRepository.save(userCreated);
         const res: ResponseSuccess = {message: "Usuario cadastrado", type: "success", body: user};
         return response.status(200).json(res);

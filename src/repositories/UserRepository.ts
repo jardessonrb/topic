@@ -13,7 +13,7 @@ class UserRepository extends Repository<User> {
     }
   }
 
-  async userValidation(email: string): Promise<boolean>{
+  async existUser(email: string): Promise<boolean>{
     try {
       const user = await this.findOne({where: {email: email}});
       return user ? true : false;

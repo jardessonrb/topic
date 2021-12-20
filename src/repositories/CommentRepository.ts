@@ -17,7 +17,7 @@ class CommentRepository extends Repository<Comment>{
           body: comment.body_comment,
           createdAt: comment.created_at,
           id: comment.created_at,
-          name: comment.name_user
+          name_user: comment.name_user
         };
       })
 

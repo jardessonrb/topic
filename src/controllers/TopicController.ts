@@ -106,7 +106,7 @@ class TopicController{
         return response.status(403).json(res);
       }
 
-      topic = await topicRepository.findOne(topic);
+      topic = await topicRepository.findOne(topicId);
       if(!topic){
         const res: ResponseError = {message: "Topico não valido", type: "error validation"}
         return response.status(403).json(res);
@@ -164,6 +164,47 @@ class TopicController{
       const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server"};
       return response.status(500).json(res);
     }
+  }
+
+  static async closeTopic(request: Request, response: Response ): Promise<Response>{
+    const { topicId, userId} =  request.body;
+
+    const schemaValidation = Yup.object().shape({
+      userId: Yup.string().required("O usuario é obrigatorio").uuid("Identificador não válido"),
+      topicId: Yup.string().required("O topico é obrigatorio").uuid("Identificador não válido")
+    });
+
+    try {
+      await schemaValidation.validate({userId, topicId}, {
+        abortEarly: false
+      });
+
+    } catch (error) {
+      const res: ResponseError = {message: "Erro de validação", type: "error validation", errors: error.errors}
+      return response.status(403).json(res);
+    }
+
+    const topicRepository = getConnection().getCustomRepository(TopicRepository);
+    try {
+      if(!await topicRepository.userIsOwnerTopic(topicId, userId)){
+        const res: ResponseError = {message: "Usuario não autorizado a fechar esse topico", type: "error validation"};
+        return response.status(403).json(res);
+      }
+
+      topicRepository.closeTopic(topicId);
+      const res: ResponseSuccess = {message: "Topico fechado com sucesso", type: "success", body: {}};
+      return response.status(200).json(res);
+
+    } catch (error) {
+      const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server"};
+      return response.status(500).json(res);
+    }
+
+
+
+
+
+    return response;
   }
 }
 

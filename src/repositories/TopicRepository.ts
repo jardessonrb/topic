@@ -53,5 +53,36 @@ class TopicRepository  extends Repository<Topic> {
       throw new Error();
     }
   }
+
+  async userIsOwnerTopic(topicId: string, userId: string): Promise<boolean>{
+
+    try {
+      const topic: Topic = await this.createQueryBuilder("topics")
+                                .innerJoinAndSelect("topics.user", "user")
+                                .where("topics.id_topic = :id", {id: topicId})
+                                .getOne();
+
+      const userIdOwnerTopic = topic.user.id;
+      return userIdOwnerTopic === userId;
+
+    } catch (error) {
+      throw new Error();
+    }
+  }
+
+  async closeTopic(topicId: string): Promise<void>{
+    try {
+      const res = await this.createQueryBuilder().update(Topic)
+                            .set({
+                              isClosed: true
+                            })
+                            .where("id_topic = :topicId", {topicId})
+                            .execute();
+
+    } catch (error) {
+      throw new Error();
+    }
+
+  }
 }
 export { TopicRepository  };
