@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.routes = void 0;
+var express_1 = require("express");
+var CommentController_1 = require("./controllers/CommentController");
+var TopicController_1 = require("./controllers/TopicController");
+var UserController_1 = require("./controllers/UserController");
+var routes = (0, express_1.Router)();
+exports.routes = routes;
+routes.post("/user", UserController_1.UserController.createUser);
+routes.get("/user/login", UserController_1.UserController.logIn);
+routes.post("/topic", TopicController_1.TopicController.createTopic);
+routes.patch("/topic/close", TopicController_1.TopicController.closeTopic);
+routes.get("/topic", TopicController_1.TopicController.listTopics);
+routes.post("/topic/vote", TopicController_1.TopicController.registerVote);
+routes.get("/topic/:topicId", TopicController_1.TopicController.findTopic);
+routes.get("/topic/my-topics/:userId", TopicController_1.TopicController.listTopicsByUser);
+routes.post("/comment", CommentController_1.CommentController.createComment);
