@@ -97,13 +97,13 @@ var TopicController = /** @class */ (function () {
                     case 5:
                         user = _b.sent();
                         if (!user) {
-                            res = { message: "Usuario não valido", type: "error validation" };
+                            res = { message: "Usuario não valido", type: "error validation", errors: [] };
                             return [2 /*return*/, response.status(403).json(res)];
                         }
                         return [3 /*break*/, 7];
                     case 6:
                         error_2 = _b.sent();
-                        res = { message: "Erro no servidor", type: "error server" };
+                        res = { message: "Erro no servidor", type: "error server", errors: [] };
                         return [2 /*return*/, response.status(500).json(res)];
                     case 7:
                         topicRepository = (0, typeorm_1.getConnection)().getCustomRepository(TopicRepository_1.TopicRepository);
@@ -125,7 +125,7 @@ var TopicController = /** @class */ (function () {
                         return [2 /*return*/, response.status(200).json(res)];
                     case 10:
                         error_3 = _b.sent();
-                        res = { message: "Erro no servidor", type: "error server" };
+                        res = { message: "Erro no servidor", type: "error server", errors: [] };
                         return [2 /*return*/, response.status(500).json(res)];
                     case 11: return [2 /*return*/];
                 }
@@ -148,11 +148,12 @@ var TopicController = /** @class */ (function () {
                     case 2:
                         topics = _e.sent();
                         topicsResponse = TopicView_1.TopicView.viewTopics(topics);
+                        console.log(topicsResponse);
                         res = { message: isFullListing ? "Lista de todos os topicos" : "Topicos em aberto", type: "success", body: topicsResponse };
                         return [2 /*return*/, response.status(200).json(res)];
                     case 3:
                         error_4 = _e.sent();
-                        res = { message: "Erro no servidor", type: "error server" };
+                        res = { message: "Erro no servidor", type: "error server", errors: [] };
                         return [2 /*return*/, response.status(500).json(res)];
                     case 4: return [2 /*return*/];
                 }
@@ -193,26 +194,26 @@ var TopicController = /** @class */ (function () {
                     case 6:
                         user = _b.sent();
                         if (!user) {
-                            res = { message: "Usuario não valido", type: "error validation" };
+                            res = { message: "Usuario não valido", type: "error validation", errors: [] };
                             return [2 /*return*/, response.status(403).json(res)];
                         }
                         return [4 /*yield*/, topicRepository.findOne(topicId)];
                     case 7:
                         topic = _b.sent();
                         if (!topic) {
-                            res = { message: "Topico não valido", type: "error validation" };
+                            res = { message: "Topico não valido", type: "error validation", errors: [] };
                             return [2 /*return*/, response.status(403).json(res)];
                         }
                         return [4 /*yield*/, topicRepository.topicAlreadyVoted(topic, user)];
                     case 8:
                         if (_b.sent()) {
-                            res = { message: "Usuario já voltou nesse topico", type: "error validation" };
+                            res = { message: "Usuario já voltou nesse topico", type: "error validation", errors: [] };
                             return [2 /*return*/, response.status(403).json(res)];
                         }
                         return [3 /*break*/, 10];
                     case 9:
                         error_6 = _b.sent();
-                        res = { message: "Erro no servidor", type: "error server" };
+                        res = { message: "Erro no servidor", type: "error server", errors: [] };
                         return [2 /*return*/, response.status(500).json(res)];
                     case 10:
                         queryRunnerTransaction = (0, typeorm_1.getConnection)().createQueryRunner();
@@ -237,7 +238,7 @@ var TopicController = /** @class */ (function () {
                         return [4 /*yield*/, queryRunnerTransaction.rollbackTransaction()];
                     case 16:
                         _b.sent();
-                        res = { message: "Erro no servidor", type: "error server" };
+                        res = { message: "Erro no servidor", type: "error server", errors: [] };
                         return [2 /*return*/, response.status(500).json(res)];
                     case 17: return [4 /*yield*/, queryRunnerTransaction.release()];
                     case 18:
@@ -259,7 +260,7 @@ var TopicController = /** @class */ (function () {
                         return [4 /*yield*/, schemaValidation.isValid(topicId)];
                     case 1:
                         if (!(_a.sent())) {
-                            res = { message: "Erro de validação, topico não valido", type: "error validation" };
+                            res = { message: "Erro de validação, topico não valido", type: "error validation", errors: [] };
                             return [2 /*return*/, response.status(403).json(res)];
                         }
                         _a.label = 2;
@@ -277,7 +278,7 @@ var TopicController = /** @class */ (function () {
                         return [2 /*return*/, response.status(200).json(res)];
                     case 4:
                         error_8 = _a.sent();
-                        res = { message: "Erro no servidor", type: "error server" };
+                        res = { message: "Erro no servidor", type: "error server", errors: [] };
                         return [2 /*return*/, response.status(500).json(res)];
                     case 5: return [2 /*return*/];
                 }
@@ -316,7 +317,7 @@ var TopicController = /** @class */ (function () {
                         return [4 /*yield*/, topicRepository.userIsOwnerTopic(topicId, userId)];
                     case 6:
                         if (!(_b.sent())) {
-                            res_2 = { message: "Usuario não autorizado a fechar esse topico", type: "error validation" };
+                            res_2 = { message: "Usuario não autorizado a fechar esse topico", type: "error validation", errors: [] };
                             return [2 /*return*/, response.status(403).json(res_2)];
                         }
                         topicRepository.closeTopic(topicId);
@@ -324,7 +325,7 @@ var TopicController = /** @class */ (function () {
                         return [2 /*return*/, response.status(200).json(res)];
                     case 7:
                         error_10 = _b.sent();
-                        res = { message: "Erro no servidor", type: "error server" };
+                        res = { message: "Erro no servidor", type: "error server", errors: [] };
                         return [2 /*return*/, response.status(500).json(res)];
                     case 8: return [2 /*return*/];
                 }
@@ -343,7 +344,7 @@ var TopicController = /** @class */ (function () {
                         return [4 /*yield*/, schemaValidation.isValid(userId)];
                     case 1:
                         if (!(_d.sent())) {
-                            res = { message: "Erro de validação, usuario não valido", type: "error validation" };
+                            res = { message: "Erro de validação, usuario não valido", type: "error validation", errors: [] };
                             return [2 /*return*/, response.status(403).json(res)];
                         }
                         topicRepository = (0, typeorm_1.getConnection)().getCustomRepository(TopicRepository_1.TopicRepository);
@@ -354,7 +355,7 @@ var TopicController = /** @class */ (function () {
                     case 3:
                         user = _d.sent();
                         if (!user) {
-                            res_3 = { message: "Usuario não valido", type: "error validation" };
+                            res_3 = { message: "Usuario não valido", type: "error validation", errors: [] };
                             return [2 /*return*/, response.status(403).json(res_3)];
                         }
                         return [4 /*yield*/, topicRepository.listTopicsByUser(user, Number(page), Number(limit))];
@@ -365,7 +366,7 @@ var TopicController = /** @class */ (function () {
                         return [2 /*return*/, response.status(200).json(res)];
                     case 5:
                         error_11 = _d.sent();
-                        res = { message: "Erro no servidor", type: "error server" };
+                        res = { message: "Erro no servidor", type: "error server", errors: [] };
                         return [2 /*return*/, response.status(500).json(res)];
                     case 6: return [2 /*return*/];
                 }

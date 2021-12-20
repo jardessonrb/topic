@@ -23,7 +23,7 @@ var TopicView = /** @class */ (function () {
         return topicsView;
     };
     TopicView.viewTopic = function (topic) {
-        return __assign(__assign({ situation: this.defineSituation(topic.upVotes, topic.downVotes) }, topic), { user: {} });
+        return __assign({ situation: this.defineSituation(topic.upVotes, topic.downVotes) }, topic);
     };
     TopicView.defineSituation = function (upVotes, downVotes) {
         if (upVotes > downVotes) {

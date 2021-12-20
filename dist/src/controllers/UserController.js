@@ -112,7 +112,7 @@ var UserController = /** @class */ (function () {
                         return [2 /*return*/, response.status(403).json(res)];
                     case 9:
                         error_2 = _b.sent();
-                        res = { message: "Erro no servidor", type: "error" };
+                        res = { message: "Erro no servidor", type: "error", errors: [] };
                         return [2 /*return*/, response.status(500).json(res)];
                     case 10: return [2 /*return*/];
                 }
@@ -156,11 +156,11 @@ var UserController = /** @class */ (function () {
                             res_2 = { message: "Usuario logado", type: "success", body: userResponse };
                             return [2 /*return*/, response.status(200).json(res_2)];
                         }
-                        res = { message: "Usuario não permitido", type: "success", body: user };
+                        res = { message: "Usuario não permitido", type: "error validation", errors: [] };
                         return [2 /*return*/, response.status(403).json(res)];
                     case 7:
                         error_4 = _b.sent();
-                        res = { message: "Erro no servidor", type: "error server" };
+                        res = { message: "Erro no servidor", type: "error server", errors: [] };
                         return [2 /*return*/, response.status(500).json(res)];
                     case 8: return [2 /*return*/];
                 }

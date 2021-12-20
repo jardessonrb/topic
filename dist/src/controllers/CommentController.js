@@ -99,20 +99,20 @@ var CommentController = /** @class */ (function () {
                     case 6:
                         user = _b.sent();
                         if (!user) {
-                            res = { message: "Usuario não valido", type: "error validation" };
+                            res = { message: "Usuario não valido", type: "error validation", errors: [] };
                             return [2 /*return*/, response.status(403).json(res)];
                         }
                         return [4 /*yield*/, topicRepository.findOne(topicId)];
                     case 7:
                         topic = _b.sent();
                         if (!topic) {
-                            res = { message: "Topico não valido", type: "error validation" };
+                            res = { message: "Topico não valido", type: "error validation", errors: [] };
                             return [2 /*return*/, response.status(403).json(res)];
                         }
                         return [3 /*break*/, 9];
                     case 8:
                         error_2 = _b.sent();
-                        res = { message: "Erro no servidor", type: "error server" };
+                        res = { message: "Erro no servidor", type: "error server", errors: [] };
                         return [2 /*return*/, response.status(500).json(res)];
                     case 9:
                         commentCreated = commentRepository.create({
@@ -130,7 +130,7 @@ var CommentController = /** @class */ (function () {
                         return [2 /*return*/, response.status(200).json(res)];
                     case 12:
                         error_3 = _b.sent();
-                        res = { message: "Erro no servidor", type: "error server" };
+                        res = { message: "Erro no servidor", type: "error server", errors: [] };
                         return [2 /*return*/, response.status(500).json(res)];
                     case 13: return [2 /*return*/];
                 }
