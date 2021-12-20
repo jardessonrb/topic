@@ -24,7 +24,7 @@ contra ou a favor em tópicos, semelhante a alguns fóruns de discussão sobre a
 - ![Postgres]("https://www.postgresql.org/") - versão 12.8
 
 ## API disponível
-![Topic]("https://jr-topic.herokuapp.com/")
+https://jr-topic.herokuapp.com/
 
 ## EndPoints
 
