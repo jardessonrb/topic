@@ -1,3 +1,4 @@
 import { UserResponse } from './UserResponse';
+import { VoteRecordResponse } from './VoteRecordResponse';
 
-export { UserResponse };
+export { UserResponse, VoteRecordResponse };
