@@ -37,11 +37,13 @@ class UserController {
 
       if(!await userRepository.existUser(email)){
         const user = await userRepository.save(userCreated);
-        const res: ResponseSuccess = {message: "Usuario cadastrado", type: "success", body: user};
+        const userResponse = UserView.viewUser(user);
+
+        const res: ResponseSuccess = {message: "Usuario cadastrado", type: "success", body: userResponse};
         return response.status(200).json(res);
       }
 
-      const res: ResponseError = {message: "Usuario já cadastrado", type: "error validation"};
+      const res: ResponseError = {message: "Usuario já cadastrado", type: "error validation", errors: []};
       return response.status(403).json(res);
 
     } catch (error) {
