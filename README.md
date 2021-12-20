@@ -23,6 +23,21 @@ contra ou a favor em tópicos, semelhante a alguns fóruns de discussão sobre a
 - ![TypeORM]("https://typeorm.io/#/") - versão 0.2.41
 - ![Postgres]("https://www.postgresql.org/") - versão 12.8
 
+## API disponível
+![Topic]("https://jr-topic.herokuapp.com/")
+
+## EndPoints
+
+<p>GET: https://jr-topic.herokuapp.com/topic?page=1&full=true&limit=10</p>
+<p>GET: https://jr-topic.herokuapp.com/topic/my-topics/e008e1d0-0c86-4177-9424-0b3a27a8cf3c</p>
+<p>POST: https://jr-topic.herokuapp.com/topic</p>
+<p>POST: https://jr-topic.herokuapp.com/vote</p>
+<p>POST: https://jr-topic.herokuapp.com/comment</p>
+<p>POST: https://jr-topic.herokuapp.com/user</p>
+<p>GET: https://jr-topic.herokuapp.com/user/login</p>
+<p>PATCH: https://jr-topic.herokuapp.com/topic/close</p>
+
+
 ## Formato de responses
 ``` 
 { // Success
@@ -61,3 +76,18 @@ contra ou a favor em tópicos, semelhante a alguns fóruns de discussão sobre a
 
 #### Validações na criação de usuário
 ![createUserJoin](https://user-images.githubusercontent.com/45296422/146812376-6eb28c01-1f3a-47e0-b84e-74b335328f87.png)
+
+## Como usar o projeto
+
+```
+
+$ cd suapasta
+$suapasta> git clone https://github.com/jardessonribeiroTI/topic.git
+$cd topic
+$topic> yarn add ou npm install
+$topic> yarn | npm typeorm migration:run
+$topic> yarn | npm dev
+
+```
+
+### Autor: Járdesson Ribeiro
