@@ -148,7 +148,6 @@ var TopicController = /** @class */ (function () {
                     case 2:
                         topics = _e.sent();
                         topicsResponse = TopicView_1.TopicView.viewTopics(topics);
-                        console.log(topicsResponse);
                         res = { message: isFullListing ? "Lista de todos os topicos" : "Topicos em aberto", type: "success", body: topicsResponse };
                         return [2 /*return*/, response.status(200).json(res)];
                     case 3:
