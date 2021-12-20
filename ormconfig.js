@@ -1,4 +1,3 @@
-
 module.exports = {
   "type": process.env.TYPE_CONNECTION,
   "url": process.env.DATABASE_URL,
@@ -7,12 +6,12 @@ module.exports = {
   "synchronize": true,
   "uuidExtension": process.env.UUID_EXTENSION,
   "entities": [process.env.TYPEORM_ENTITIES],
-  "ssl": true,
-  "extra": {
-    "ssl": {
-      "rejectUnauthorized": false
-    }
-  },
+  // "ssl": true,
+  // "extra": {
+  //   "ssl": {
+  //     "rejectUnauthorized": false
+  //   }
+  // },
   "migrations": [process.env.TYPEORM_MIGRATIONS],
   "cli": {
       "migrationsDir": process.env.TYPEORM_MIGRATIONS_DIR

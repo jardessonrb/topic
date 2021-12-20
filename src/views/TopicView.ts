@@ -13,8 +13,7 @@ class TopicView {
   static viewTopic(topic: Topic){
     return {
       situation: this.defineSituation(topic.upVotes, topic.downVotes),
-      ...topic,
-      user: {}
+      ...topic
     }
   }
 

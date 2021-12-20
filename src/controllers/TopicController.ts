@@ -73,6 +73,7 @@ class TopicController{
     try {
       const topics = await topicRepository.listTopics(Number(page), Number(limit), isFullListing);
       const topicsResponse = TopicView.viewTopics(topics);
+      console.log(topicsResponse)
       const res: ResponseSuccess = {message: isFullListing ? "Lista de todos os topicos" : "Topicos em aberto", type: "success", body: topicsResponse};
       return response.status(200).json(res);
 

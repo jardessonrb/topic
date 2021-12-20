@@ -47,7 +47,7 @@ class UserController {
       return response.status(403).json(res);
 
     } catch (error) {
-      const res: ResponseError = {message: "Erro no servidor", type: "error"}
+      const res: ResponseError = {message: "Erro no servidor", type: "error", errors: []}
       return response.status(500).json(res);
     }
   }
@@ -78,11 +78,11 @@ class UserController {
         return response.status(200).json(res);
       }
 
-      const res: ResponseSuccess = {message: "Usuario não permitido", type: "success", body: user};
+      const res: ResponseError = {message: "Usuario não permitido", type: "error validation", errors: []};
       return response.status(403).json(res);
 
     } catch (error) {
-      const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server"}
+      const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server", errors: []}
       return response.status(500).json(res);
     }
 

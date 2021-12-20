@@ -34,18 +34,18 @@ class CommentController{
     try {
       user = await getConnection().getCustomRepository(UserRepository).findOne(userId);
       if(!user){
-        const res: ResponseError = {message: "Usuario não valido", type: "error validation"}
+        const res: ResponseError = {message: "Usuario não valido", type: "error validation", errors: []}
         return response.status(403).json(res);
       }
 
       topic = await topicRepository.findOne(topicId);
       if(!topic){
-        const res: ResponseError = {message: "Topico não valido", type: "error validation"}
+        const res: ResponseError = {message: "Topico não valido", type: "error validation", errors: []}
         return response.status(403).json(res);
       }
 
     } catch (error) {
-      const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server"};
+      const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server", errors: []};
       return response.status(500).json(res);
     }
 
@@ -60,7 +60,7 @@ class CommentController{
       const res: ResponseSuccess = {message: "Comentario criado com sucesso", type: "success", body: comment};
       return response.status(200).json(res);
     } catch (error) {
-      const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server"};
+      const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server", errors: []};
       return response.status(500).json(res);
     }
   }
