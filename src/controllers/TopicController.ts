@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { Topic } from "../models/Topic";
 import { VoteRecordRepository } from "../repositories/VoteRecordRepository";
 import { CommentRepository } from "../repositories/CommentRepository";
+import { TopicView } from "../views/TopicView";
 
 class TopicController{
 
@@ -69,7 +70,8 @@ class TopicController{
 
     try {
       const topics = await topicRepository.listTopics(Number(page), Number(limit), isFullListing);
-      const res: ResponseSuccess = {message: isFullListing ? "Lista de todos os topicos" : "Topicos em aberto", type: "success", body: topics};
+      const topicsResponse = TopicView.viewTopics(topics);
+      const res: ResponseSuccess = {message: isFullListing ? "Lista de todos os topicos" : "Topicos em aberto", type: "success", body: topicsResponse};
       return response.status(200).json(res);
 
     } catch (error) {
