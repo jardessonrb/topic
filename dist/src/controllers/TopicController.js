@@ -161,7 +161,7 @@ var TopicController = /** @class */ (function () {
     };
     TopicController.registerVote = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, userId, topicId, typeVote, user, topic, schemaValidation, error_5, res, topicRepository, res, res, res, error_6, res, queryRunnerTransaction, voteRecord, voteRecordResponse, res, error_7, res;
+            var _a, userId, topicId, typeVote, user, topic, schemaValidation, error_5, res, topicRepository, res, res, res, res, error_6, res, queryRunnerTransaction, voteRecord, voteRecordResponse, res, error_7, res;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -189,18 +189,22 @@ var TopicController = /** @class */ (function () {
                         _b.label = 5;
                     case 5:
                         _b.trys.push([5, 9, , 10]);
-                        return [4 /*yield*/, (0, typeorm_1.getConnection)().getCustomRepository(UserRepository_1.UserRepository).findOne(userId)];
-                    case 6:
-                        user = _b.sent();
-                        if (!user) {
-                            res = { message: "Usuario não valido", type: "error validation", errors: [] };
-                            return [2 /*return*/, response.status(403).json(res)];
-                        }
                         return [4 /*yield*/, topicRepository.findOne(topicId)];
-                    case 7:
+                    case 6:
                         topic = _b.sent();
                         if (!topic) {
                             res = { message: "Topico não valido", type: "error validation", errors: [] };
+                            return [2 /*return*/, response.status(403).json(res)];
+                        }
+                        if (topic.isClosed) {
+                            res = { message: "Esse tópico já está fechado para votação", type: "error validation", errors: [] };
+                            return [2 /*return*/, response.status(403).json(res)];
+                        }
+                        return [4 /*yield*/, (0, typeorm_1.getConnection)().getCustomRepository(UserRepository_1.UserRepository).findOne(userId)];
+                    case 7:
+                        user = _b.sent();
+                        if (!user) {
+                            res = { message: "Usuario não valido", type: "error validation", errors: [] };
                             return [2 /*return*/, response.status(403).json(res)];
                         }
                         return [4 /*yield*/, topicRepository.topicAlreadyVoted(topic, user)];
