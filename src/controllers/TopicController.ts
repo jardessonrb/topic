@@ -106,11 +106,6 @@ class TopicController{
 
     const topicRepository = getConnection().getCustomRepository(TopicRepository);
     try {
-      user = await getConnection().getCustomRepository(UserRepository).findOne(userId);
-      if(!user){
-        const res: ResponseError = {message: "Usuario não valido", type: "error validation", errors: []}
-        return response.status(403).json(res);
-      }
 
       topic = await topicRepository.findOne(topicId);
       if(!topic){
@@ -118,10 +113,22 @@ class TopicController{
         return response.status(403).json(res);
       }
 
+      if(topic.isClosed){
+        const res: ResponseError = {message: "Esse tópico já está fechado para votação", type: "error validation", errors: []};
+        return response.status(403).json(res);
+      }
+
+      user = await getConnection().getCustomRepository(UserRepository).findOne(userId);
+      if(!user){
+        const res: ResponseError = {message: "Usuario não valido", type: "error validation", errors: []}
+        return response.status(403).json(res);
+      }
+
       if(await topicRepository.topicAlreadyVoted(topic, user)){
         const res: ResponseError = {message: "Usuario já voltou nesse topico", type: "error validation", errors: []};
         return response.status(403).json(res);
       }
+
 
     } catch (error) {
       const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server", errors: []};
