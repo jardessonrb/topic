@@ -16,7 +16,7 @@ contra ou a favor em tópicos, semelhante a alguns fóruns de discussão sobre a
 - [x] Salvar o registro de votação(Um método interno que auxilia na recuperção para o usuário não votar novamente)
 - [x] Todas as listagens possuem paginação de resultados
 
-## Tecnologias Usadas 
+## Tecnologias usadas 
 - ![Node js]("https://nodejs.org/en/") - versão 14.17
 - ![Typescript]("https://www.typescriptlang.org/") - versão 4.5
 - ![Express]("https://expressjs.com/") - versão 4.17.1
@@ -30,12 +30,84 @@ https://jr-topic.herokuapp.com/
 
 <p>GET: https://jr-topic.herokuapp.com/topic?page=1&full=true&limit=10</p>
 <p>GET: https://jr-topic.herokuapp.com/topic/my-topics/e008e1d0-0c86-4177-9424-0b3a27a8cf3c</p>
+<p>GET: https://jr-topic.herokuapp.com/topic/d09af02b-23a3-4c52-b437-172f6b652111</p>
 <p>POST: https://jr-topic.herokuapp.com/topic</p>
 <p>POST: https://jr-topic.herokuapp.com/vote</p>
 <p>POST: https://jr-topic.herokuapp.com/comment</p>
 <p>POST: https://jr-topic.herokuapp.com/user</p>
 <p>GET: https://jr-topic.herokuapp.com/user/login</p>
 <p>PATCH: https://jr-topic.herokuapp.com/topic/close</p>
+
+## Requests
+<p>POST: https://jr-topic.herokuapp.com/topic</p>
+
+```
+
+{
+	"userId": "e008e1d0-0c86-4177-9424-0b3a27a8cf3c",
+	"title": "Aqui tem o titulo do meu topico",
+	"body":  "Aqui vem o corpo to meu topico"
+}
+
+```
+
+<p>POST: https://jr-topic.herokuapp.com/comment</p>
+
+```
+
+{
+	"topicId": "d09af02b-23a3-4c52-b437-172f6b652111",
+	"userId": "e008e1d0-0c86-4177-9424-0b3a27a8cf3c",
+	"body":  "Comentario sobre o topico"
+}
+
+```
+
+<p>POST: https://jr-topic.herokuapp.com/user</p>
+
+```
+
+{
+	"name": "Super Mario",
+	"email": "super.mario@stail.com",
+	"password": "sp123456"	
+}
+
+```
+
+<p>POST: https://jr-topic.herokuapp.com/topic/vote</p>
+
+```
+
+{
+	"userId": "e008e1d0-0c86-4177-9424-0b3a27a8cf3c",
+	"topicId": "d09af02b-23a3-4c52-b437-172f6b652111",
+	"typeVote": true
+}
+
+```
+
+<p>PATCH: https://jr-topic.herokuapp.com/topic/close</p>
+
+```
+
+{
+	"topicId": "d09af02b-23a3-4c52-b437-172f6b652111",
+	"userId": "e008e1d0-0c86-4177-9424-0b3a27a8cf3c"
+}
+
+```
+
+<p>GET: https://jr-topic.herokuapp.com/user/login</p>
+
+```
+
+{
+	"email": "jardesson01@gmail.com",
+	"password": "jr123456" 
+}
+
+```
 
 
 ## Formato de responses
