@@ -12,7 +12,6 @@ class TopicView {
   }
 
   static viewTopic(topic: Topic){
-    console.log(topic);
     const { user, ...rest} = topic;
     rest as Topic;
     const nameUser = user.name; //topic.user.name não funciona corretamente

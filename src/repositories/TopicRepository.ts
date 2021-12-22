@@ -122,12 +122,17 @@ class TopicRepository  extends Repository<Topic> {
       limit = limit * page;
 
       let topics: Topic[] = await this.find({
-        where: {user},
-        order: {createdAt: 'DESC'},
-        skip: offSet,
-        take: limit
-      });
-
+                                      join: {
+                                        alias: "topics",
+                                        innerJoinAndSelect: {
+                                          user: "topics.user"
+                                        }
+                                      },
+                                      where: {user},
+                                      order: {createdAt: 'DESC'},
+                                      skip: offSet,
+                                      take: limit
+                                      });
       topics = await this.insertCommentsInTopic(topics);
       return topics;
 
