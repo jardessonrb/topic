@@ -138,10 +138,10 @@ https://jr-topic.herokuapp.com/
 
 ## Exemplos de requisição
 #### Listagem de tópicos
-![Print listTopics](https://user-images.githubusercontent.com/45296422/146808562-76aacad4-20cf-44eb-9aa2-7f29d5e4dcc5.png)
+![RetornoFindTopics](https://user-images.githubusercontent.com/45296422/147099193-9d36b628-6381-475e-a8c9-07bc6219f776.png)
 
 #### Criação de um tópico
-![CreateTopic](https://user-images.githubusercontent.com/45296422/146809465-88adc776-3ab2-4d35-b624-f1ee405370f2.png)
+![RetronoCreateTopic](https://user-images.githubusercontent.com/45296422/147099462-432e45ab-28ce-4165-83ff-af63a529c4a6.png)
 
 #### Criação de um usuário
 ![CreateUserSuccess](https://user-images.githubusercontent.com/45296422/146811079-8331f13b-11e9-43ab-b291-41bdee31789a.png)
