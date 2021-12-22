@@ -7,6 +7,7 @@ import { getConnection } from "typeorm";
 import { TopicRepository } from "../repositories/TopicRepository";
 import { UserRepository } from "../repositories/UserRepository";
 import { CommentRepository } from "../repositories/CommentRepository";
+import { CommentView } from "../views/CommentView";
 
 class CommentController{
   static async createComment(request: Request, response: Response ): Promise<Response>{
@@ -57,8 +58,10 @@ class CommentController{
 
     try {
       const comment = await commentRepository.save(commentCreated);
-      const res: ResponseSuccess = {message: "Comentario criado com sucesso", type: "success", body: comment};
+      const commentResponse = CommentView.viewComment(comment);
+      const res: ResponseSuccess = {message: "Comentario criado com sucesso", type: "success", body: commentResponse};
       return response.status(200).json(res);
+
     } catch (error) {
       const res: ResponseErrorServer = {message: "Erro no servidor", type: "error server", errors: []};
       return response.status(500).json(res);
