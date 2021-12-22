@@ -8,7 +8,6 @@ import { VoteRecordRepository } from "./VoteRecordRepository";
 class TopicRepository  extends Repository<Topic> {
 
   async listTopics(page: number, limit: number, isFull?: boolean): Promise<Topic[]>{
-
     try {
       const offSet = (page - 1) * limit;
       limit = limit * page;
@@ -16,18 +15,30 @@ class TopicRepository  extends Repository<Topic> {
 
       if(isFull) {
         topics = await this.find({
+                            join: {
+                              alias: "topics",
+                              innerJoinAndSelect: {
+                                user: "topics.user"
+                              }
+                            },
                             order: {createdAt: 'DESC'},
                             skip: offSet,
                             take: limit});
       }else{
         topics = await this.find({
+                            join: {
+                              alias: "topics",
+                              innerJoinAndSelect: {
+                                user: "topics.user"
+                              }
+                            },
                             where: {isClosed: false},
                             order: {createdAt: 'DESC'},
                             skip: offSet,
                             take: limit});
       }
-      topics = await this.insertCommentsInTopic(topics);
 
+      topics = await this.insertCommentsInTopic(topics);
       return topics;
 
     } catch (error) {

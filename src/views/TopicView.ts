@@ -1,4 +1,5 @@
 import { Topic } from "../models/Topic";
+import { User } from "../models/User";
 
 class TopicView {
 
@@ -11,9 +12,21 @@ class TopicView {
   }
 
   static viewTopic(topic: Topic){
+    const { user, ...rest} = topic;
+    rest as Topic;
+    const nameUser = user.name; //topic.user.name não funciona corretamente
+
     return {
+      id: rest.id,
       situation: this.defineSituation(topic.upVotes, topic.downVotes),
-      ...topic
+      title: rest.title,
+      body: rest.body,
+      upVotes: rest.upVotes,
+      downVotes: rest.downVotes,
+      createdAt: rest.createdAt,
+      isClosed: rest.isClosed,
+      nameUser,
+      comments: rest.comments
     }
   }
 
