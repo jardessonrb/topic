@@ -61,12 +61,13 @@ var typeorm_1 = require("typeorm");
 var TopicRepository_1 = require("../repositories/TopicRepository");
 var UserRepository_1 = require("../repositories/UserRepository");
 var CommentRepository_1 = require("../repositories/CommentRepository");
+var CommentView_1 = require("../views/CommentView");
 var CommentController = /** @class */ (function () {
     function CommentController() {
     }
     CommentController.createComment = function (request, response) {
         return __awaiter(this, void 0, void 0, function () {
-            var _a, topicId, userId, body, user, topic, schemaValidation, error_1, res, topicRepository, commentRepository, res, res, error_2, res, commentCreated, comment, res, error_3, res;
+            var _a, topicId, userId, body, user, topic, schemaValidation, error_1, res, topicRepository, commentRepository, res, res, error_2, res, commentCreated, comment, commentResponse, res, error_3, res;
             return __generator(this, function (_b) {
                 switch (_b.label) {
                     case 0:
@@ -126,7 +127,8 @@ var CommentController = /** @class */ (function () {
                         return [4 /*yield*/, commentRepository.save(commentCreated)];
                     case 11:
                         comment = _b.sent();
-                        res = { message: "Comentario criado com sucesso", type: "success", body: comment };
+                        commentResponse = CommentView_1.CommentView.viewComment(comment);
+                        res = { message: "Comentario criado com sucesso", type: "success", body: commentResponse };
                         return [2 /*return*/, response.status(200).json(res)];
                     case 12:
                         error_3 = _b.sent();

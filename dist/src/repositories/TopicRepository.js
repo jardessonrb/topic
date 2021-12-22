@@ -79,6 +79,12 @@ var TopicRepository = /** @class */ (function (_super) {
                         topics = void 0;
                         if (!isFull) return [3 /*break*/, 2];
                         return [4 /*yield*/, this.find({
+                                join: {
+                                    alias: "topics",
+                                    innerJoinAndSelect: {
+                                        user: "topics.user"
+                                    }
+                                },
                                 order: { createdAt: 'DESC' },
                                 skip: offSet,
                                 take: limit
@@ -87,6 +93,12 @@ var TopicRepository = /** @class */ (function (_super) {
                         topics = _a.sent();
                         return [3 /*break*/, 4];
                     case 2: return [4 /*yield*/, this.find({
+                            join: {
+                                alias: "topics",
+                                innerJoinAndSelect: {
+                                    user: "topics.user"
+                                }
+                            },
                             where: { isClosed: false },
                             order: { createdAt: 'DESC' },
                             skip: offSet,
@@ -239,6 +251,12 @@ var TopicRepository = /** @class */ (function (_super) {
                         offSet = (page - 1) * limit;
                         limit = limit * page;
                         return [4 /*yield*/, this.find({
+                                join: {
+                                    alias: "topics",
+                                    innerJoinAndSelect: {
+                                        user: "topics.user"
+                                    }
+                                },
                                 where: { user: user },
                                 order: { createdAt: 'DESC' },
                                 skip: offSet,
@@ -265,7 +283,16 @@ var TopicRepository = /** @class */ (function (_super) {
                 switch (_b.label) {
                     case 0:
                         _b.trys.push([0, 3, , 4]);
-                        return [4 /*yield*/, this.findOne(topicId)];
+                        return [4 /*yield*/, this.findOne({
+                                join: {
+                                    alias: "topics",
+                                    innerJoinAndSelect: {
+                                        user: "topics.user"
+                                    }
+                                },
+                                where: { id: topicId },
+                                order: { createdAt: 'DESC' },
+                            })];
                     case 1:
                         topic = _b.sent();
                         _a = topic;
