@@ -138,7 +138,16 @@ class TopicRepository  extends Repository<Topic> {
 
   async findOneTopic(topicId: string): Promise<Topic>{
     try {
-      const topic = await this.findOne(topicId);
+      const topic: Topic = await this.findOne({
+                                      join: {
+                                        alias: "topics",
+                                        innerJoinAndSelect: {
+                                          user: "topics.user"
+                                        }
+                                      },
+                                      where: {id: topicId},
+                                      order: {createdAt: 'DESC'},
+                                    });
       topic.comments = await getConnection().getCustomRepository(CommentRepository).findCommentByTopic(topic.id);
       return topic;
 
