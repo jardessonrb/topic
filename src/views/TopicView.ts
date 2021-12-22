@@ -26,7 +26,7 @@ class TopicView {
       createdAt: rest.createdAt,
       isClosed: rest.isClosed,
       nameUser,
-      comments: rest.comments
+      comments: (!rest.comments) ? [] : rest.comments
     }
   }
 
